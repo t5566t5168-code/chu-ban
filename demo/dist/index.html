@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="留一點空白，讀一段文字。簡單的 TXT 閱讀器互動 Demo。">
+  <title>留白 · TXT 閱讀器</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar"><a href="#" class="brand" id="home" aria-label="留白首頁"><span class="brand-mark">白</span><span>留白<span class="brand-en">QUIET READER</span></span></a><div class="header-right"><span class="demo-tag">互動 Demo</span><button class="button small" id="open-top">開啟文字檔 <span aria-hidden="true">↗</span></button></div></header>
+  <main>
+    <section id="welcome" class="welcome">
+      <div class="intro"><div class="eyebrow"><span></span> 給文字，也給自己一點空間</div><h1>把世界調小，<br>把文字<span class="accent">打開。</span></h1><p class="intro-copy">一份文字，一段安靜的時間。<br>從這裡開始，慢慢讀。</p><button class="button primary" id="open-main"><span aria-hidden="true">＋</span> 開啟 TXT 檔案 <span aria-hidden="true">↗</span></button><p class="hint">純文字閱讀 · UTF-8 編碼 · 無需登入</p></div>
+      <div class="paper-scene" aria-hidden="true"><div class="paper-back"></div><div class="paper"><div class="paper-top">A MOMENT OF QUIET <span>01</span></div><div class="paper-rule"></div><h2>日子，<br>慢慢地走。</h2><p>午後的光落在書頁上。<br>風穿過窗，也穿過那些<br>還來不及說完的句子。</p><div class="paper-bottom">留白，是為了讀見更多。<span>✳</span></div></div><div class="scene-caption">LESS NOISE. MORE WORDS.</div></div>
+      <div class="samples"><div class="section-label"><h2>還沒有檔案？先讀一小段</h2><span>示範文字 / 02</span></div><div class="sample-grid"><button class="sample" data-sample="0"><span class="file-icon">TXT</span><span class="sample-info"><strong>在山裡，慢下來</strong><span>旅行隨筆 · 約 3 分鐘</span></span><span class="sample-arrow">↗</span></button><button class="sample" data-sample="1"><span class="file-icon blue">TXT</span><span class="sample-info"><strong>城市睡著以後</strong><span>生活散文 · 約 2 分鐘</span></span><span class="sample-arrow">↗</span></button></div></div>
+    </section>
+    <section id="reader" hidden><div class="reader-toolbar"><button class="text-button" id="back">← 返回首頁</button><span id="filename"></span><span class="file-type">TXT / UTF-8</span></div><article class="reading-page"><div class="eyebrow">留一段時間，給閱讀。</div><h1 id="reading-title" tabindex="-1"></h1><div class="reading-meta"><span id="word-count"></span><span>上下捲動，慢慢閱讀</span></div><div id="reading-content"></div><div class="end-mark">— 讀到這裡，剛剛好 —</div><button class="text-button end-button" id="open-end">換一份文字繼續讀 ↗</button></article></section>
+  </main>
+  <footer><span>留白 <span class="footer-dot">·</span> 讓閱讀，簡單一點。</span><span>本次閱讀不會保存進度</span></footer>
+  <dialog id="picker"><form method="dialog"><div class="modal-heading"><span class="eyebrow">OPEN A TEXT</span><button class="close" aria-label="關閉">×</button></div><h2>今天，想讀什麼？</h2><p class="modal-copy">挑一份示範文字，或開啟自己的 TXT 檔案。</p><div class="picker-list"><button type="button" class="picker-item" data-sample="0"><span class="file-icon">TXT</span><span><strong>在山裡，慢下來.txt</strong><small>示範文字 · 旅行隨筆</small></span><span>↗</span></button><button type="button" class="picker-item" data-sample="1"><span class="file-icon blue">TXT</span><span><strong>城市睡著以後.txt</strong><small>示範文字 · 生活散文</small></span><span>↗</span></button></div><button type="button" class="local-file" id="local-open">＋ 選擇本機 TXT 檔案 <span>檔案只在瀏覽器內讀取，不會上傳</span></button><p id="picker-error" role="alert" hidden></p><details><summary>試試其他狀態</summary><div class="state-buttons"><button type="button" id="empty-demo">空白檔案</button><button type="button" id="error-demo">讀取失敗</button></div></details><div class="modal-footer"><span>僅支援 UTF-8 編碼的 .txt 檔案</span><button class="text-button">取消</button></div></form></dialog>
+  <input id="file-input" type="file" accept=".txt,text/plain" hidden><div id="toast" role="status" hidden></div>
+  <script src="app.js"></script>
+</body></html>
