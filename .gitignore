@@ -1,3 +1,6 @@
-# Local metadata retained from the Sites publishing helper
-.site-source-git/
-demo-site.tar.gz
+node_modules/
+.vite/
+out/
+coverage/
+test-results/
+*.log
