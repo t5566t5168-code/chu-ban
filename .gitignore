@@ -7,3 +7,5 @@ test-results/
 # Local metadata retained from the Sites publishing helper
 .site-source-git/
 demo-site.tar.gz
+# Local user books converted for UTF-8 reading; never commit book contents.
+converted/
