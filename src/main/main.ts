@@ -15,7 +15,7 @@ function createWindow() {
   window = new BrowserWindow({
     width: 1120, height: 820, minWidth: 460, minHeight: 520,
     title: '留白 · TXT 閱讀器', backgroundColor: '#f7f6f2', autoHideMenuBar: true,
-    webPreferences: { preload: join(__dirname, 'preload.js'), nodeIntegration: false, contextIsolation: true, sandbox: true }
+    webPreferences: { preload: join(__dirname, 'preload.cjs'), nodeIntegration: false, contextIsolation: true, sandbox: true }
   });
   window.setMenu(null);
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
