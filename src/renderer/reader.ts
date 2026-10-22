@@ -38,7 +38,7 @@ export function mountReader(root: Document, api: ReaderAPI) {
         hasFile = true;
         translation.reset();
         root.querySelector<HTMLElement>('#translation-toggle')!.hidden = false;
-        root.querySelector<HTMLElement>('#document-format')!.textContent = `${result.fileName.split('.').pop()?.toUpperCase()} · 文字閱讀模式`;
+        root.querySelector<HTMLElement>('#document-format')!.textContent = `${result.fileName.split('.').pop()?.toUpperCase()}${result.encoding ? ' / ' + result.encoding : ''} · 文字閱讀模式`;
         viewport.scrollTop = 0;
         title.focus({ preventScroll: true });
         message.textContent = empty.hidden ? '已開啟檔案。' : '此檔案沒有可閱讀的內容。';

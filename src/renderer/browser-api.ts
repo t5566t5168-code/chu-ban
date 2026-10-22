@@ -1,4 +1,5 @@
 import { MAX_FILE_BYTES, supportedExtensions, type ReaderAPI, type OpenResult } from '../shared/reader';
+import { decodeTxt } from '../shared/decode-txt';
 
 export async function readBrowserFile(file: File): Promise<OpenResult> {
   const extension = file.name.split('.').pop()?.toLowerCase() || '';
@@ -7,7 +8,7 @@ export async function readBrowserFile(file: File): Promise<OpenResult> {
   try {
     const bytes = new Uint8Array(await file.arrayBuffer());
     if (extension !== 'txt') return { status: 'binary', fileName: file.name, bytes };
-    try { return { status: 'success', fileName: file.name, text: new TextDecoder('utf-8', { fatal: true }).decode(bytes) }; }
+    try { return { status: 'success', fileName: file.name, ...decodeTxt(bytes) }; }
     catch { return { status: 'error', code: 'invalid-utf8' }; }
   } catch { return { status: 'error', code: 'read-failed' }; }
 }

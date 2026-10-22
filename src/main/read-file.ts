@@ -1,6 +1,7 @@
 import { open } from 'node:fs/promises';
 import { basename, extname } from 'node:path';
 import { MAX_FILE_BYTES, supportedExtensions, type OpenResult } from '../shared/reader';
+import { decodeTxt } from '../shared/decode-txt';
 
 export function decodeText(bytes: Uint8Array): string {
   return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
@@ -18,10 +19,10 @@ export async function readTextFile(filePath: string): Promise<OpenResult> {
     const bytes = await file.readFile();
     if (bytes.length > MAX_FILE_BYTES) return { status: 'error', code: 'too-large' };
     if (extension !== 'txt') return { status: 'binary', fileName: basename(filePath), bytes: new Uint8Array(bytes) };
-    let text: string;
-    try { text = decodeText(bytes); }
+    let decoded: ReturnType<typeof decodeTxt>;
+    try { decoded = decodeTxt(bytes); }
     catch { return { status: 'error', code: 'invalid-utf8' }; }
-    return { status: 'success', fileName: basename(filePath), text };
+    return { status: 'success', fileName: basename(filePath), ...decoded };
   } catch {
     return { status: 'error', code: 'read-failed' };
   } finally {

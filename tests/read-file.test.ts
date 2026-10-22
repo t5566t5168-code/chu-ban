@@ -23,7 +23,7 @@ describe('file validation', () => {
   it('accepts uppercase extension and exposes basename only', async () => {
     const path = join(directory, '小說.TXT');
     await writeFile(path, '\uFEFF第一章\r\nHello 😀');
-    expect(await readTextFile(path)).toEqual({ status: 'success', fileName: '小說.TXT', text: '第一章\r\nHello 😀' });
+    expect(await readTextFile(path)).toEqual({ status: 'success', fileName: '小說.TXT', text: '第一章\r\nHello 😀', encoding: 'UTF-8' });
   });
   it('rejects unsupported extension before reading', async () => {
     expect(await readTextFile(join(directory, 'book.docx'))).toEqual({ status: 'error', code: 'unsupported-extension' });

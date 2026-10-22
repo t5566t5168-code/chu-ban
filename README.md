@@ -4,8 +4,8 @@
 
 Chrome 可直接開啟 [線上閱讀器](https://quiet-txt-reader.glassygoat32.chatgpt.site)，網站仍為私人存取。也可以在專案目錄執行 `npm run web`，將終端顯示的本機網址貼到 Chrome。
 
-- 支援 UTF-8 TXT、有文字層的 PDF、無 DRM 的 EPUB；PDF 按頁、EPUB 按書籍閱讀順序擷取純文字，不保留圖片與原版面。複雜 PDF 的欄位與換行順序可能不同於原稿。
-- 檔案在瀏覽器內處理、不上傳。上限為單檔 50 MB、PDF 1,000 頁、EPUB 解壓文字 20 MB；不支援掃描 OCR、密碼 PDF、DRM、Big5 或 GBK。
+- 支援 UTF-8、GBK／GB18030 TXT、有文字層的 PDF、無 DRM 的 EPUB；PDF 按頁、EPUB 按書籍閱讀順序擷取純文字，不保留圖片與原版面。複雜 PDF 的欄位與換行順序可能不同於原稿。
+- 檔案在瀏覽器內處理、不上傳。上限為單檔 50 MB、PDF 1,000 頁、EPUB 解壓文字 20 MB；不支援掃描 OCR、密碼 PDF、DRM、Big5。
 - 選取閱讀文字會開啟翻譯面板；也可按「文字翻譯 · Demo」貼上原文，選擇繁中、英文或日文。
 - **翻譯為模擬功能，未串接 API。**「填入示範句」提供預設譯文；任意原文只顯示流程佔位提示，不假裝已完成翻譯。換檔會清除原文與結果。
 - 取消或讀取失敗保留目前文件；重新載入不保存文件、進度與翻譯。
@@ -20,7 +20,7 @@ Chrome 可直接開啟 [線上閱讀器](https://quiet-txt-reader.glassygoat32.c
 
 將 `out/make/zip/win32/x64/` 裡的 ZIP 完整解壓，執行 `QuietReader.exe`。也可以直接執行 `out/Quiet Reader-win32-x64/QuietReader.exe`；請保留同資料夾的其他檔案，不能只移動 EXE。
 
-點選「開啟 TXT 檔案」或按 `Ctrl+O`，選擇 UTF-8 `.txt` 檔案。閱讀時可用滾輪、方向鍵、Page Up / Page Down 捲動，頂端按鈕可更換檔案。成功換檔後回到頂端；取消或失敗會保留原內容及位置。
+點選「開啟 TXT 檔案」或按 `Ctrl+O`，選擇 UTF-8 或 GBK／GB18030 `.txt` 檔案。閱讀時可用滾輪、方向鍵、Page Up / Page Down 捲動，頂端按鈕可更換檔案。成功換檔後回到頂端；取消或失敗會保留原內容及位置。
 
 TXT 支援 UTF-8 BOM、中文、英文、Emoji 與原始換行；空白檔案會顯示提示。檔案不會上傳，不保存檔案副本、閱讀位置或書架，重新開啟程式時回到首頁。
 
