@@ -2,7 +2,7 @@
   "name": "quiet-reader",
   "productName": "Quiet Reader",
   "version": "1.0.0",
-  "description": "留白 · 離線 UTF-8 TXT 閱讀器",
+  "description": "留白 · TXT、PDF、EPUB 閱讀器與模擬翻譯",
   "author": "Quiet Reader",
   "private": true,
   "main": ".vite/build/main.cjs",
@@ -11,6 +11,9 @@
   },
   "scripts": {
     "start": "electron-forge start",
+    "web": "vite --config vite.renderer.config.mjs --host 127.0.0.1",
+    "build:web": "vite build --config vite.renderer.config.mjs --outDir out/web",
+    "preview:web": "vite preview --config vite.renderer.config.mjs --outDir out/web --host 127.0.0.1",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:desktop": "node scripts/desktop-smoke.cjs",
@@ -28,5 +31,9 @@
     "typescript": "^5.9.3",
     "vite": "8.3.4",
     "vitest": "5.0.5"
+  },
+  "dependencies": {
+    "jszip": "3.10.2",
+    "pdfjs-dist": "6.4.299"
   }
 }

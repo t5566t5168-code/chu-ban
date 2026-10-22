@@ -26,7 +26,7 @@ describe('file validation', () => {
     expect(await readTextFile(path)).toEqual({ status: 'success', fileName: '小說.TXT', text: '第一章\r\nHello 😀' });
   });
   it('rejects unsupported extension before reading', async () => {
-    expect(await readTextFile(join(directory, 'book.pdf'))).toEqual({ status: 'error', code: 'unsupported-extension' });
+    expect(await readTextFile(join(directory, 'book.docx'))).toEqual({ status: 'error', code: 'unsupported-extension' });
   });
   it('classifies missing files and directories as read failures', async () => {
     expect(await readTextFile(join(directory, 'missing.txt'))).toEqual({ status: 'error', code: 'read-failed' });
@@ -38,5 +38,10 @@ describe('file validation', () => {
     const path = join(directory, 'bad.txt');
     await writeFile(path, Buffer.from([0xff, 0xfe]));
     expect(await readTextFile(path)).toEqual({ status: 'error', code: 'invalid-utf8' });
+  });
+  it.each(['pdf', 'epub'])('passes %s bytes to the renderer without decoding', async extension => {
+    const path = join(directory, `book.${extension}`);
+    await writeFile(path, Uint8Array.from([0, 255, 128, 1]));
+    expect(await readTextFile(path)).toEqual({ status: 'binary', fileName: `book.${extension}`, bytes: Uint8Array.from([0, 255, 128, 1]) });
   });
 });

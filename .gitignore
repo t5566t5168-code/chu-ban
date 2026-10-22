@@ -9,3 +9,5 @@ test-results/
 demo-site.tar.gz
 # Local user books converted for UTF-8 reading; never commit book contents.
 converted/
+public/pdf-assets/
+.sites-publish/

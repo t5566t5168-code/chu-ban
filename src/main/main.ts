@@ -14,7 +14,7 @@ const rendererURL = MAIN_WINDOW_VITE_DEV_SERVER_URL || pathToFileURL(rendererFil
 function createWindow() {
   window = new BrowserWindow({
     width: 1120, height: 820, minWidth: 460, minHeight: 520,
-    title: '留白 · TXT 閱讀器', backgroundColor: '#f7f6f2', autoHideMenuBar: true,
+    title: '留白 · 閱讀器', backgroundColor: '#f7f6f2', autoHideMenuBar: true,
     webPreferences: { preload: join(__dirname, 'preload.cjs'), nodeIntegration: false, contextIsolation: true, sandbox: true }
   });
   window.setMenu(null);
@@ -37,8 +37,8 @@ app.whenReady().then(() => {
     opening = true;
     try {
       const result = await dialog.showOpenDialog(window, {
-        title: '開啟 TXT 檔案', buttonLabel: '開啟',
-        properties: ['openFile'], filters: [{ name: 'UTF-8 文字檔', extensions: ['txt'] }]
+        title: '開啟閱讀檔案', buttonLabel: '開啟',
+        properties: ['openFile'], filters: [{ name: '閱讀文件', extensions: ['txt', 'pdf', 'epub'] }]
       });
       if (result.canceled || !result.filePaths[0]) return { status: 'cancelled' };
       return await readTextFile(result.filePaths[0]);
