@@ -1,5 +1,9 @@
 # 留白 · 閱讀器
 
+## GitHub 版本
+
+程式碼位於 [chu-ban](https://github.com/t5566t5168-code/chu-ban)。GitHub Actions 自動測試並產出可下載的網頁版，亦已備妥 Pages 部署流程；目前私人儲存庫的方案限制尚待解除，網站尚未上線。詳見 [GitHub 網頁版建置與發布說明](docs/GITHUB_VERSION.md)。
+
 ## 2026-10-22 更新：Chrome、PDF / EPUB 與翻譯 Demo
 
 Chrome 可直接開啟 [線上閱讀器](https://quiet-txt-reader.glassygoat32.chatgpt.site)，網站仍為私人存取。也可以在專案目錄執行 `npm run web`，將終端顯示的本機網址貼到 Chrome。
