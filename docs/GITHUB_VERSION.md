@@ -2,7 +2,7 @@
 
 儲存庫：https://github.com/t5566t5168-code/chu-ban
 
-網頁版使用目前的 TXT（UTF-8、GBK／GB18030）、PDF、EPUB 閱讀功能與模擬翻譯介面。文件在瀏覽器內處理，不上傳至 GitHub；重新整理後不保留文件。
+網頁版使用目前的 TXT（UTF-8、GBK／GB18030）、PDF、EPUB 閱讀功能與 Chrome 裝置內翻譯功能。文件在瀏覽器內處理，不上傳至 GitHub；重新整理後不保留文件。
 
 ## 建置與下載
 
@@ -21,3 +21,5 @@
 發布僅包含 `out/web/`；小說、轉碼副本、測試資料、桌面 EXE、Git 資料與開發依賴不會放入網站。
 
 參考：[GitHub Pages 自訂工作流程](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)。
+
+翻譯需支援 Translator API 的桌面 Chrome；首次使用需連線下載模型，手機目前不支援。選取段落最多 2,000 字，手動選擇原文語言。文字不會上傳；不支援或下載失敗時會顯示提示並允許重試。官方說明：https://developer.chrome.com/docs/ai/translator-api

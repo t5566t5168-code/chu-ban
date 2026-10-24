@@ -4,14 +4,14 @@
 
 直接開啟 [GitHub 網頁版閱讀器](https://t5566t5168-code.github.io/chu-ban/)。程式碼位於公開儲存庫 [chu-ban](https://github.com/t5566t5168-code/chu-ban)。GitHub Actions 在每次推送 main 後自動測試、建置並部署至 Pages。詳見 [GitHub 網頁版建置與發布說明](docs/GITHUB_VERSION.md)。
 
-## 2026-10-22 更新：Chrome、PDF / EPUB 與翻譯 Demo
+## 2026-10-22 更新：Chrome、PDF / EPUB 與 Chrome 內建翻譯
 
 Chrome 可直接開啟 [線上閱讀器](https://quiet-txt-reader.glassygoat32.chatgpt.site)，網站仍為私人存取。也可以在專案目錄執行 `npm run web`，將終端顯示的本機網址貼到 Chrome。
 
 - 支援 UTF-8、GBK／GB18030 TXT、有文字層的 PDF、無 DRM 的 EPUB；PDF 按頁、EPUB 按書籍閱讀順序擷取純文字，不保留圖片與原版面。複雜 PDF 的欄位與換行順序可能不同於原稿。
 - 檔案在瀏覽器內處理、不上傳。上限為單檔 50 MB、PDF 1,000 頁、EPUB 解壓文字 20 MB；不支援掃描 OCR、密碼 PDF、DRM、Big5。
-- 選取閱讀文字會開啟翻譯面板；也可按「文字翻譯 · Demo」貼上原文，選擇繁中、英文或日文。
-- **翻譯為模擬功能，未串接 API。**「填入示範句」提供預設譯文；任意原文只顯示流程佔位提示，不假裝已完成翻譯。換檔會清除原文與結果。
+- 選取閱讀文字會開啟翻譯面板；也可按「文字翻譯」貼上原文，選擇繁中、英文或日文。
+- **翻譯使用 Chrome Translator API，在訪客裝置上執行，無需 API 金鑰。** 請選擇原文與目標語言；首次使用可能下載語言模型。需支援此 API 的桌面 Chrome 與 HTTPS（本機 localhost 亦可）；手機、部分內嵌瀏覽器及 Electron 不保證支援，會顯示說明。語言組合以瀏覽器實際支援為準。換檔、改文或改語言會清除舊結果，不顯示過期譯文。
 - 取消或讀取失敗保留目前文件；重新載入不保存文件、進度與翻譯。
 
 瀏覽器發行版：`npm run build:web` 產生 `out/web/`，`npm run preview:web` 啟動本機預覽。請透過 HTTP/HTTPS 開啟，不要直接雙擊建置後的 HTML（PDF worker 需要網頁來源）。Windows 版仍可用 `npm run make` 建置，使用相同閱讀與翻譯介面。

@@ -7,7 +7,7 @@
   <title>留白 · 閱讀器</title>
 </head>
 <body>
-  <header class="topbar"><div class="brand"><span class="brand-mark">白</span><span>留白<small>QUIET READER</small></span></div><div class="header-right"><span id="filename">一段安靜的閱讀時間</span><button id="translation-toggle" class="button" aria-controls="translation-panel" aria-expanded="false" hidden>文字翻譯 · Demo</button><button data-open class="button">開啟檔案 ↗</button></div></header>
+  <header class="topbar"><div class="brand"><span class="brand-mark">白</span><span>留白<small>QUIET READER</small></span></div><div class="header-right"><span id="filename">一段安靜的閱讀時間</span><button id="translation-toggle" class="button" aria-controls="translation-panel" aria-expanded="false" hidden>文字翻譯</button><button data-open class="button">開啟檔案 ↗</button></div></header>
   <div class="workspace">
   <main id="viewport" tabindex="0" aria-label="閱讀區域">
     <section id="welcome" class="welcome">
@@ -15,15 +15,16 @@
       <div class="paper-scene" aria-hidden="true"><div class="paper-back"></div><div class="paper"><div class="paper-top">A MOMENT OF QUIET <span>01</span></div><hr><h2>日子，<br>慢慢地走。</h2><p>留一點空白，<br>讓文字陪你走一段路。</p><div class="paper-bottom">留白，是為了讀見更多。 <span>✳</span></div></div><span class="scene-caption">LESS NOISE. MORE WORDS.</span></div>
       <div class="privacy"><span>01 / 選一份文字</span><span>02 / 慢慢閱讀</span><span>03 / 隨時換一篇</span></div>
     </section>
-    <section id="reader" hidden><article class="reading-page"><div class="eyebrow" id="document-format">文字閱讀模式</div><h1 id="reading-title" tabindex="-1"></h1><p class="reading-meta">上下捲動閱讀 · 選取文字可開啟模擬翻譯</p><p id="empty" hidden>此檔案沒有可閱讀的內容。</p><div id="reading-content"></div><div class="end-mark">— 留一點空白 —</div><button class="button end-button" data-open>換一份文字繼續讀 ↗</button></article></section>
+    <section id="reader" hidden><article class="reading-page"><div class="eyebrow" id="document-format">文字閱讀模式</div><h1 id="reading-title" tabindex="-1"></h1><p class="reading-meta">上下捲動閱讀 · 選取文字可開啟翻譯</p><p id="empty" hidden>此檔案沒有可閱讀的內容。</p><div id="reading-content"></div><div class="end-mark">— 留一點空白 —</div><button class="button end-button" data-open>換一份文字繼續讀 ↗</button></article></section>
   </main>
   <aside id="translation-panel" aria-labelledby="translation-heading" hidden>
     <div class="panel-heading"><span class="eyebrow">WORDS WITHOUT BORDERS</span><button id="translation-close" aria-label="關閉翻譯面板">×</button></div>
-    <h2 id="translation-heading">讀懂另一種語言</h2><p class="demo-notice">模擬翻譯 Demo · 未連接翻譯服務</p>
+    <h2 id="translation-heading">讀懂另一種語言</h2><p class="demo-notice">Chrome 裝置內翻譯 · 首次使用需下載模型</p>
     <label for="translation-source">選取的原文 <small>最多 2,000 字</small></label><textarea id="translation-source" maxlength="2000" rows="6" placeholder="在左側選取文字，或在這裡貼上原文。"></textarea>
     <button id="translation-example" class="text-button">填入示範句 ↗</button>
+    <label for="translation-source-language">原文語言</label><select id="translation-source-language"><option value="zh-Hans">簡體中文</option><option value="zh-Hant">繁體中文</option><option value="en">English</option><option value="ja">日本語</option></select>
     <label for="translation-language">目標語言</label><select id="translation-language"><option value="zh-Hant">繁體中文</option><option value="en">English</option><option value="ja">日本語</option></select>
-    <button id="translate-run" class="button primary">模擬翻譯 →</button><div id="translation-result" role="status" aria-live="polite">選取閱讀區的文字，或輸入一段原文，再點「模擬翻譯」。</div><p class="panel-note">文字只留在此頁，不會傳送至外部服務。換檔後清除本次翻譯內容。</p>
+    <button id="translate-run" class="button primary">翻譯 →</button><div id="translation-result" role="status" aria-live="polite">選取閱讀區的文字，或輸入一段原文，再點「翻譯」。</div><p class="panel-note">翻譯在裝置上執行，文字不會上傳。模型由 Chrome 下載；需使用支援此功能的桌面 Chrome。換檔後清除本次翻譯內容。</p>
   </aside></div>
   <div id="status" role="status" aria-live="polite" aria-atomic="true"></div>
   <footer><span>本機閱讀 · 檔案不會上傳</span><span>關閉後不保存檔案與閱讀位置</span></footer>
