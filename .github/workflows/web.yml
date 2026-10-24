@@ -6,11 +6,6 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
-    inputs:
-      deploy:
-        description: Deploy to Pages (enable Pages in repository settings first)
-        type: boolean
-        default: false
 
 permissions:
   contents: read
@@ -42,12 +37,12 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - uses: actions/upload-pages-artifact@v4
-        if: github.ref == 'refs/heads/main' && (vars.PAGES_ENABLED == 'true' || inputs.deploy == true)
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         with:
           path: out/web/
 
   deploy:
-    if: github.ref == 'refs/heads/main' && (vars.PAGES_ENABLED == 'true' || inputs.deploy == true)
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10

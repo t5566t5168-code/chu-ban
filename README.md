@@ -2,7 +2,7 @@
 
 ## GitHub 版本
 
-程式碼位於 [chu-ban](https://github.com/t5566t5168-code/chu-ban)。GitHub Actions 自動測試並產出可下載的網頁版，亦已備妥 Pages 部署流程；目前私人儲存庫的方案限制尚待解除，網站尚未上線。詳見 [GitHub 網頁版建置與發布說明](docs/GITHUB_VERSION.md)。
+直接開啟 [GitHub 網頁版閱讀器](https://t5566t5168-code.github.io/chu-ban/)。程式碼位於公開儲存庫 [chu-ban](https://github.com/t5566t5168-code/chu-ban)。GitHub Actions 在每次推送 main 後自動測試、建置並部署至 Pages。詳見 [GitHub 網頁版建置與發布說明](docs/GITHUB_VERSION.md)。
 
 ## 2026-10-22 更新：Chrome、PDF / EPUB 與翻譯 Demo
 
