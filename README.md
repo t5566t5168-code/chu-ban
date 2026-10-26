@@ -1,5 +1,9 @@
 # 留白 · 閱讀器
 
+## 大型小說閱讀
+
+大型文件會分頁顯示（每頁最多約 12,000 字），可使用上一頁、下一頁與頁碼跳轉，避免一次排版整本小說造成瀏覽器無回應。頁數為閱讀器切分的文字頁數，並非 PDF 原始頁碼。選取與瀏覽器搜尋限目前顯示頁面；重新開啟文件會回到第一頁。
+
 ## GitHub 版本
 
 直接開啟 [GitHub 網頁版閱讀器](https://t5566t5168-code.github.io/chu-ban/)。程式碼位於公開儲存庫 [chu-ban](https://github.com/t5566t5168-code/chu-ban)。GitHub Actions 在每次推送 main 後自動測試、建置並部署至 Pages。詳見 [GitHub 網頁版建置與發布說明](docs/GITHUB_VERSION.md)。

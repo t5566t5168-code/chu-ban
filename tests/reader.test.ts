@@ -54,3 +54,17 @@ it('keeps the welcome view after cancellation', async () => {
   expect(element('welcome').hidden).toBe(false);
   expect(element('reader').hidden).toBe(true);
 });
+it('renders a bounded page and supports navigating and replacing a large book', async () => {
+  const text = '甲'.repeat(12000) + '乙'.repeat(12000) + '末頁';
+  const openTextFile = vi.fn<() => Promise<OpenResult>>().mockResolvedValueOnce({ status: 'success', fileName: 'large.txt', text }).mockResolvedValueOnce(success);
+  const app = mountReader(document, { openTextFile }); await app.openFile();
+  expect(element('reading-content').textContent).toBe('甲'.repeat(12000));
+  (element('next-page') as HTMLButtonElement).click();
+  expect(element('reading-content').textContent).toBe('乙'.repeat(12000));
+  (element('page-number') as HTMLInputElement).value = '3';
+  element('page-jump').dispatchEvent(new Event('submit', { cancelable: true }));
+  expect(element('reading-content').textContent).toBe('末頁');
+  expect((element('next-page') as HTMLButtonElement).disabled).toBe(true);
+  await app.openFile(); expect(element('page-navigation').hidden).toBe(true);
+  expect(element('reading-content').textContent).toBe(success.text);
+});

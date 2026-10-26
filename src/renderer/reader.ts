@@ -1,6 +1,7 @@
 import { errorMessages, type ReaderAPI } from '../shared/reader';
 import { parseDocument } from './documents';
 import { mountTranslation } from './translation';
+import { pageOffsets } from './pages';
 
 export function mountReader(root: Document, api: ReaderAPI) {
   const welcome = root.querySelector<HTMLElement>('#welcome')!;
@@ -13,6 +14,33 @@ export function mountReader(root: Document, api: ReaderAPI) {
   const viewport = root.querySelector<HTMLElement>('#viewport')!;
   const buttons = [...root.querySelectorAll<HTMLButtonElement>('[data-open]')];
   const translation = mountTranslation(root);
+  const pager = root.querySelector<HTMLElement>('#page-navigation')!;
+  const previous = root.querySelector<HTMLButtonElement>('#previous-page')!;
+  const next = root.querySelector<HTMLButtonElement>('#next-page')!;
+  const pageInput = root.querySelector<HTMLInputElement>('#page-number')!;
+  const pageCount = root.querySelector<HTMLElement>('#page-count')!;
+  let book = '';
+  let offsets = [0, 0];
+  let page = 0;
+  function showPage(index: number) {
+    page = Math.max(0, Math.min(offsets.length - 2, index));
+    content.textContent = book.slice(offsets[page], offsets[page + 1]);
+    pager.hidden = offsets.length <= 2;
+    previous.disabled = page === 0;
+    next.disabled = page === offsets.length - 2;
+    pageInput.value = String(page + 1);
+    pageInput.max = String(offsets.length - 1);
+    pageCount.textContent = `/ ${offsets.length - 1} 頁`;
+    viewport.scrollTop = 0;
+    translation.reset();
+  }
+  previous.addEventListener('click', () => showPage(page - 1));
+  next.addEventListener('click', () => showPage(page + 1));
+  root.querySelector('#page-jump')!.addEventListener('submit', event => {
+    event.preventDefault();
+    const requested = pageInput.valueAsNumber;
+    if (Number.isInteger(requested) && requested >= 1 && requested < offsets.length) showPage(requested - 1);
+  });
   let busy = false;
   let hasFile = false;
   async function openFile() {
@@ -27,7 +55,9 @@ export function mountReader(root: Document, api: ReaderAPI) {
         result = await parseDocument(result);
       }
       if (result.status === 'success') {
-        content.textContent = result.text;
+        book = result.text;
+        offsets = pageOffsets(book);
+        showPage(0);
         name.textContent = result.fileName;
         name.title = result.fileName;
         title.textContent = result.fileName;
