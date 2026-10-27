@@ -2,7 +2,7 @@
 import { beforeEach, afterEach, expect, it, vi } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { mountTranslation } from '../src/renderer/translation';
-beforeEach(() => { document.documentElement.innerHTML = readFileSync('index.html', 'utf8'); });
+beforeEach(() => { document.documentElement.innerHTML = readFileSync('index.html', 'utf8'); (document.getElementById('translation-engine') as HTMLSelectElement).value = 'chrome'; });
 afterEach(() => vi.unstubAllGlobals());
 const button = (id: string) => document.getElementById(id) as HTMLButtonElement;
 const result = () => document.getElementById('translation-result')!.textContent;
@@ -67,4 +67,14 @@ it('avoids model requests for empty, oversized or same-language input', () => {
   (document.getElementById('translation-source-language') as HTMLSelectElement).value = 'en';
   (document.getElementById('translation-language') as HTMLSelectElement).value = 'en';
   button('translate-run').click(); expect(result()).toContain('無須翻譯'); expect(create).not.toHaveBeenCalled();
+});
+it('offers local translation without Chrome API and validates pair and length before download', () => {
+  vi.stubGlobal('Translator', undefined);
+  (document.getElementById('translation-engine') as HTMLSelectElement).value = 'local';
+  mountTranslation(document); expect(button('translate-run').disabled).toBe(false);
+  const source = document.getElementById('translation-source') as HTMLTextAreaElement;
+  source.value = '中文'; (document.getElementById('translation-language') as HTMLSelectElement).value = 'ja';
+  button('translate-run').click(); expect(result()).toContain('只支援中文');
+  (document.getElementById('translation-language') as HTMLSelectElement).value = 'en';
+  source.value = '中'.repeat(501); button('translate-run').click(); expect(result()).toContain('最多 500 字');
 });

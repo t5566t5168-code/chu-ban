@@ -2,7 +2,7 @@
   "name": "quiet-reader",
   "productName": "Quiet Reader",
   "version": "1.0.0",
-  "description": "留白 · TXT、PDF、EPUB 閱讀器與模擬翻譯",
+  "description": "留白 · TXT、PDF、EPUB 閱讀器與裝置內翻譯",
   "author": "Quiet Reader",
   "private": true,
   "main": ".vite/build/main.cjs",
@@ -33,6 +33,7 @@
     "vitest": "5.0.5"
   },
   "dependencies": {
+    "@huggingface/transformers": "4.3.1",
     "jszip": "3.10.2",
     "pdfjs-dist": "6.4.299"
   }
