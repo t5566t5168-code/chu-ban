@@ -4,7 +4,7 @@ export class ModelClient {
   private sequence = 0;
   private pending?: { id: number; resolve: (text: string) => void; reject: (error: Error) => void; progress: (text: string) => void };
   constructor(private createWorker = () => new Worker(new URL('./translation.worker.ts', import.meta.url), { type: 'module' })) {}
-  translate(text: string, progress: (text: string) => void): Promise<string> {
+  translate(text: string, progress: (text: string) => void, target = 'en'): Promise<string> {
     if (this.pending) this.cancel();
     return new Promise((resolve, reject) => {
       try {
@@ -32,7 +32,7 @@ export class ModelClient {
         }
         const id = ++this.sequence;
         this.pending = { id, resolve, reject, progress };
-        this.worker.postMessage({ id, text, runtime: new URL('translation-runtime/', document.baseURI).href });
+        this.worker.postMessage({ id, text, target, runtime: new URL('translation-runtime/', document.baseURI).href });
       } catch {
         this.pending = undefined;
         this.cancel();

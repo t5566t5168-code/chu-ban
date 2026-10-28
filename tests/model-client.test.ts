@@ -21,7 +21,8 @@ it('does not create a worker until requested and reuses it for successive transl
   worker.onmessage!({ data: { id: firstId, type: 'result', text: 'Hello' } } as MessageEvent);
   await expect(first).resolves.toBe('Hello');
   client.cancelPending(); expect(worker.terminate).not.toHaveBeenCalled();
-  const second = client.translate('世界', progress);
+  const second = client.translate('世界', progress, 'ja');
+  expect(worker.postMessage.mock.calls[1][0].target).toBe('ja');
   worker.onmessage!({ data: { id: firstId, type: 'result', text: 'stale' } } as MessageEvent);
   worker.onmessage!({ data: { id: worker.postMessage.mock.calls[1][0].id, type: 'result', text: 'World' } } as MessageEvent);
   await expect(second).resolves.toBe('World'); expect(create).toHaveBeenCalledOnce(); client.cancel();

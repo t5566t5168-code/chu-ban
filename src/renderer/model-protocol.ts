@@ -1,4 +1,4 @@
-export type ModelRequest = { id: number; text: string; runtime: string };
+export type ModelRequest = { id: number; text: string; runtime: string; target?: string };
 export type ModelReply = { id: number; type: 'progress' | 'result' | 'error'; text: string };
 export const LOCAL_LIMIT = 500;
 // Short segments avoid silently truncating the model's input token window.

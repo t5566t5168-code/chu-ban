@@ -6,6 +6,7 @@ mkdirSync('public/translation-runtime', { recursive: true });
 for (const file of readdirSync('node_modules/onnxruntime-web/dist').filter(file => /^ort-wasm.*\.(wasm|mjs)$/.test(file))) {
   cpSync(`node_modules/onnxruntime-web/dist/${file}`, `public/translation-runtime/${file}`);
 }
+cpSync('node_modules/@wllama/wllama/esm/wasm/wllama.wasm', 'public/translation-runtime/wllama.wasm');
 export default defineConfig({
   base: './',
   worker: { format: 'es' },

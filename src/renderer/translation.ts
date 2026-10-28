@@ -25,6 +25,8 @@ export function mountTranslation(root: Document) {
   const engine = root.querySelector<HTMLSelectElement>('#translation-engine')!;
   const stop = root.querySelector<HTMLButtonElement>('#translation-stop')!;
   const model = new ModelClient();
+  const hy = new ModelClient(() => new Worker(new URL('./hy.worker.ts', import.meta.url), { type: 'module' }));
+  const isHy = () => engine.value === 'hy';
   const isLocal = () => engine.value === 'local';
   const factory = (root.defaultView as (Window & { Translator?: TranslatorFactory }) | null)?.Translator;
   let generation = 0;
@@ -35,12 +37,12 @@ export function mountTranslation(root: Document) {
   };
   const resetResult = () => {
     generation++;
-    model.cancelPending();
+    model.cancelPending(); hy.cancelPending();
     stop.hidden = true;
     if (active) release(active);
     active = undefined;
-    run.disabled = !isLocal() && !factory;
-    result.textContent = isLocal()
+    run.disabled = !isLocal() && !isHy() && !factory;
+    result.textContent = isHy() ? 'Hy-MT2：中、英、日互譯，每次最多 500 字。首次下載約 1.13 GB 模型及 9 MB 執行檔；建議桌面電腦，翻譯可能需數分鐘。' : isLocal()
       ? '開源模型試用：中文 → 英文，每次最多 500 字。按「翻譯」後才下載模型（約 113 MB，另含執行檔）；請先用短句測試。'
       : factory ? '選擇原文與目標語言，再點「翻譯」。首次使用會下載語言模型，請保持網路連線。' : unsupported;
   };
@@ -52,12 +54,12 @@ export function mountTranslation(root: Document) {
     resetResult(); open();
   });
   toggle.addEventListener('click', () => { open(); source.focus(); });
-  root.querySelector('#translation-close')!.addEventListener('click', () => { resetResult(); model.cancel(); panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); });
+  root.querySelector('#translation-close')!.addEventListener('click', () => { resetResult(); model.cancel(); hy.cancel(); panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); });
   engine.addEventListener('change', () => {
     if (isLocal()) { from.value = 'zh-Hans'; target.value = 'en'; }
-    resetResult(); model.cancel();
+    resetResult(); model.cancel(); hy.cancel();
   });
-  stop.addEventListener('click', () => { resetResult(); model.cancel(); result.textContent = '已停止翻譯；可修改原文後重試。'; });
+  stop.addEventListener('click', () => { resetResult(); model.cancel(); hy.cancel(); result.textContent = '已停止翻譯；可修改原文後重試。'; });
   source.addEventListener('input', resetResult);
   from.addEventListener('change', resetResult);
   target.addEventListener('change', resetResult);
@@ -66,22 +68,22 @@ export function mountTranslation(root: Document) {
     from.value = isLocal() ? 'zh-Hans' : 'en'; target.value = isLocal() ? 'en' : 'zh-Hant'; resetResult();
   });
   run.addEventListener('click', async () => {
-    if (!isLocal() && !factory) { result.textContent = unsupported; return; }
+    if (!isLocal() && !isHy() && !factory) { result.textContent = unsupported; return; }
     const text = source.value.trim();
     if (!text) { result.textContent = '請先選取或輸入要翻譯的文字。'; source.focus(); return; }
     if (text.length > 2000) { result.textContent = '每次最多翻譯 2,000 字，請縮短原文。'; return; }
     resetResult();
     if (from.value === target.value) { result.textContent = '原文與目標語言相同，無須翻譯。\n\n' + text; return; }
-    if (isLocal()) {
-      if (!['zh-Hans', 'zh-Hant'].includes(from.value) || target.value !== 'en') {
-        result.textContent = '開源模型目前只支援中文 → 英文；其他語言請選 Chrome 內建翻譯。'; return;
+    if (isLocal() || isHy()) {
+      if (!isHy() && (!['zh-Hans', 'zh-Hant'].includes(from.value) || target.value !== 'en')) {
+        result.textContent = '輕量模型只支援中文 → 英文；其他語言請選 Hy-MT2 或 Chrome 內建翻譯。'; return;
       }
       if (text.length > LOCAL_LIMIT) { result.textContent = '開源模型試用每次最多 500 字，請縮短原文。'; return; }
       const job = generation;
       run.disabled = true; stop.hidden = false;
       result.textContent = '正在啟動背景翻譯…';
       try {
-        const translated = await model.translate(text, progress => { if (job === generation) result.textContent = progress; });
+        const translated = await (isHy() ? hy : model).translate(text, progress => { if (job === generation) result.textContent = progress; }, target.value);
         if (job === generation) result.textContent = translated;
       } catch (error) {
         if (job === generation) result.textContent = error instanceof Error ? error.message : '翻譯失敗，請重試。';
@@ -124,5 +126,5 @@ export function mountTranslation(root: Document) {
     }
   });
   resetResult();
-  return { reset() { resetResult(); model.cancel(); source.value = ''; panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }, open };
+  return { reset() { resetResult(); model.cancel(); hy.cancel(); source.value = ''; panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); }, open };
 }
